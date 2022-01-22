@@ -1,0 +1,9 @@
+
+
+type ResultUsers implements Result {
+   "Estado de la operacion"
+   status: Boolean!
+   "Mensaje de la operacion para dar feedback"
+   message: String!
+   users: [User!]!
+}

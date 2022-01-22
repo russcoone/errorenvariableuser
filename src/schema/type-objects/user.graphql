@@ -1,0 +1,28 @@
+
+"""
+Vamos a especificar la informacion detallda del usuario
+* Vamos a tenre en cuenta
+email = usuario del cliente de la base de datos
+fecha de nacimineto y regsitro en formato ISO
+
+"""
+
+
+type User {
+   "Identificador obligatorio"
+   id: ID!
+   "nombre de pila"
+   name: String!
+   "Apellidos"
+   lastname: String!
+   "correo electronico"
+   email: String!
+   "password asociado ala cuenta"
+   password: String!
+   "fecha de registro en la base de datos"
+   registerDate: String!
+   "fecha de nacimiento - solo maoyres de 18 year"
+   birthday: String!
+   "Permisos del usuario"
+   role: Role! 
+}
