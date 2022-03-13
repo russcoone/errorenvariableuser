@@ -10,7 +10,7 @@ input UserInput {
    "correo electronico"
    email: String!
    "password asociado ala cuenta"
-   password: String!
+   password: String
    "fecha de nacimiento - solo maoyres de 18 year"
    birthday: String!
    "Permisos del usuario"

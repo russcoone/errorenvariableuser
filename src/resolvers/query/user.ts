@@ -6,79 +6,24 @@ import JWT from "../../lib/jwt";
 import bcrypt from "bcrypt";
 import { findElement, findOneElement } from "../../lib/db-operations";
 import user from "../mutation/user";
+import UsersService from "../../services/users.service";
 
 const resolversUserQuery: IResolvers = {
   Query: {
-    async users(_, __, { db }) {
-      try {
-        return {
-          status: true,
-          message: "Lista de Usuarios cargada correctamente",
-          users: await findElement(db, COLLECTIONS.USERS),
-        };
-      } catch (error) {
-        console.log(error);
-        return {
-          status: false,
-          message:
-            "Error al cargar los usuario . Comprobar que tienes correctamente todo",
-          users: [],
-        };
-      }
+    async users(_, __, context) {
+      return new UsersService(_, __, context).items();
     },
-    async login(_, { email, password }, { db }) {
-      try {
-        const user = await findOneElement(db, COLLECTIONS.USERS, { email });
 
-        if (user === null) {
-          return {
-            status: false,
-            message: "Usuario no exite",
-            token: null,
-          };
-        }
-
-        const passwordCheck = bcrypt.compareSync(password, user.password);
-
-        if (passwordCheck !== null) {
-          delete user.password;
-          delete user.birthday;
-          delete user.registerDate;
-        }
-
-        return {
-          status: true,
-          message: !passwordCheck
-            ? "Password y usuario no correctos, sesion no iniciada"
-            : " usuarios cargada correctamenta",
-          token: !passwordCheck
-            ? null
-            : new JWT().sign({ user }, EXPIRETIME.H24),
-        };
-      } catch (error) {
-        console.log(error);
-        return {
-          status: false,
-          message:
-            "Error al cargar el usuario . Comprobar que tienes correctamente todo",
-          token: null,
-        };
-      }
+    async login(_, { email, password }, context) {
+      return new UsersService(
+        _,
+        { user: { email, password } },
+        context
+      ).login();
     },
+
     me(_, __, { token }) {
-      let info = new JWT().verify(token);
-      if (info == MESSAGES.TOKEN_VERICATION_FAILED) {
-        return {
-          status: false,
-          message: info,
-          user: null,
-        };
-      }
-      return {
-        status: true,
-        message: "Usuario authenticado mediante el token",
-        user: Object.values(info)[0],
-      };
+      return new UsersService(_, __, { token }).auth();
     },
   },
 };

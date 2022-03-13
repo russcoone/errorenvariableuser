@@ -51,6 +51,7 @@
     "mongodb": "^3.7.3",
     "ncp": "^2.0.0",
     "npx": "^10.2.2",
+    "slugify": "^1.6.5",
     "typescript": "^4.5.4"
   },
   "devDependencies": {

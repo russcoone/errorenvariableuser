@@ -8,6 +8,7 @@ export const SECRET_KEY = process.env.SECRET || "App OnlineStore";
 
 export enum COLLECTIONS {
   USERS = "users",
+  GENRES = "genres",
 }
 
 export enum MESSAGES {

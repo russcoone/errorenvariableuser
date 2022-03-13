@@ -5,10 +5,10 @@ export interface IContext {
 
 interface IRequest {
   headers: {
-    authorization: string;
+    authorization: String;
   };
 }
 
 interface IConnection {
-  authorization: string;
+  authorization: String;
 }

@@ -2,6 +2,6 @@
 
 "Tipos de usuarios que tenemos -Permisos de los usuarios"
 enum Role {
-   CLIENT
    ADMIN
+   CLIENT
 }

@@ -6,4 +6,6 @@ type ResultLogin implements Result {
    message: String!
    "IN_formacion del token del usuario logueado"
    token: String
+   "Informacion del usuario"
+   user: User
 }

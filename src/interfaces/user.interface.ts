@@ -3,7 +3,7 @@ export interface IUser {
   name: String;
   lastname: String;
   email: String;
-  password: String;
+  password: string;
   registerDate: String;
   birthday: String;
   role: String;
