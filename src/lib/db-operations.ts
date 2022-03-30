@@ -40,7 +40,7 @@ export const insertOneElement = async (
   return await database.collection(collection).insertOne(documento);
 };
 
-export const insertManyElement = async (
+export const insertManyElements = async (
   database: Db,
   collection: string,
   documento: Array<object>
@@ -67,7 +67,7 @@ export const deleteOneElement = async (
   return await database.collection(collection).deleteOne(filter);
 };
 
-export const findElement = async (
+export const findElements = async (
   database: Db,
   collection: string,
   filter: object = {}

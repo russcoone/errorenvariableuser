@@ -1,7 +1,7 @@
 import { IContextDate } from "./../interfaces/context-data.interface";
 import {
   deleteOneElement,
-  findElement,
+  findElements,
   findOneElement,
   insertOneElement,
   updateOneElement,
@@ -35,7 +35,7 @@ class ResolversOperationsService {
       return {
         status: true,
         message: `Lista de ${listElement} correctamente cargada`,
-        items: await findElement(this.getDb(), collection),
+        items: await findElements(this.getDb(), collection),
       };
     } catch (error) {
       return {
@@ -129,7 +129,7 @@ class ResolversOperationsService {
         }
         return {
           status: false,
-          message: `Elemento del ${item} No se ha actualizado Comprueba que estas filtrando Correctamente`,
+          message: `Elemento del ${item} No se ha actualizado Comprueba que estas filtrando Correctamente o simplemente no ay nada que actualizar`,
           item: null,
         };
       });

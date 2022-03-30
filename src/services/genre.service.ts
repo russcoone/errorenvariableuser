@@ -46,14 +46,14 @@ class GenresService extends ResolversOperationsService {
     }
 
     // si valida las opciones anteriores venir aqui el docment
-    const genreObjet = {
+    const genreObject = {
       id: await asignDocmentId(this.getDb(), this.collection, { id: -1 }),
       name: genre,
       slug: slugify(genre || "", { lower: true }),
     };
     const result = await this.add(
       this.collection,
-      genreObjet,
+      genreObject,
 
       "genero"
     );

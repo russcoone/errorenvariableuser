@@ -6,5 +6,5 @@ export interface IUser {
   password: string;
   registerDate: String;
   birthday: String;
-  role: String;
+  // role: String;
 }

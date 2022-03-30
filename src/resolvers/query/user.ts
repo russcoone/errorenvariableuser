@@ -1,10 +1,11 @@
+// import { UsersService } from "../../../../../meang-frontend/src/app/@core/services/users.service";
 import { info } from "console";
 import { query } from "express";
 import { IResolvers } from "graphql-tools";
 import { COLLECTIONS, EXPIRETIME, MESSAGES } from "../../config/constants";
 import JWT from "../../lib/jwt";
 import bcrypt from "bcrypt";
-import { findElement, findOneElement } from "../../lib/db-operations";
+import { findElements, findOneElement } from "../../lib/db-operations";
 import user from "../mutation/user";
 import UsersService from "../../services/users.service";
 

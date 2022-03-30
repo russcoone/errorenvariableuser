@@ -10,8 +10,8 @@ class UsersService extends ResolversOperationsService {
   constructor(root: object, variables: object, context: IContextDate) {
     super(root, variables, context);
   }
-  // lista de usuarios
 
+  // lista de usuarios
   async items() {
     const result = await this.list(this.collection, "usuarios");
     return {
@@ -142,6 +142,7 @@ class UsersService extends ResolversOperationsService {
   //modificar un usuarios
   async modify() {
     const user = this.getVariables().user;
+    // comprobar que user no es null
     if (user === null) {
       return {
         status: false,
@@ -160,6 +161,23 @@ class UsersService extends ResolversOperationsService {
       status: result.status,
       message: result.message,
       user: result.item,
+    };
+  }
+  //Borrar el usuario selecionado
+  async delete() {
+    const id = this.getVariables().id;
+    if (id === undefined || id === "") {
+      return {
+        status: false,
+        message:
+          "Identificador del usuario no definido procure definirlo para eliminar el useario",
+        user: null,
+      };
+    }
+    const result = await this.del(this.collection, { id }, "usuario");
+    return {
+      status: result.status,
+      message: result.message,
     };
   }
 }
