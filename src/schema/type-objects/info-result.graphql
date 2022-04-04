@@ -1,0 +1,11 @@
+type ResultInfo {
+    "Pagina selecinada"
+    page: Int!
+    "numeo total de documentos que corresponda a esa coleccion aplicando los filtros"
+    total: Int!
+    "numero de documentos por paginas"
+    itemsPage: Int!
+    "Paginas que contiene el resultado"
+    pages: Int!
+
+}
