@@ -78,6 +78,15 @@ class GenresService extends ResolversOperationsService {
         genre: null,
       };
     }
+    // COmprobar que no existe
+    if (await this.checkInDatabase(genre || "")) {
+      return {
+        status: false,
+        message:
+          "El género existe en la base de datos, intenta con otro género",
+        genre: null,
+      };
+    }
 
     if (!this.checkData(genre || "")) {
       return {
@@ -119,6 +128,29 @@ class GenresService extends ResolversOperationsService {
     }
     const result = await this.del(this.collection, { id }, "genero");
     return { status: result.status, message: result.message };
+  }
+
+  async block() {
+    const id = this.getVariables().id;
+    if (!this.checkData(String(id) || "")) {
+      return {
+        status: false,
+        message: "",
+        genre: null,
+      };
+    }
+    const result = await this.update(
+      this.collection,
+      { id },
+      { active: false },
+      "genero"
+    );
+    return {
+      status: result.status,
+      message: result.status
+        ? "Bloqueado correctamente"
+        : "No se ha bloqueado comprobarlo por favor",
+    };
   }
 
   private checkData(value: string) {
