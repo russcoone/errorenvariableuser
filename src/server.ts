@@ -8,6 +8,7 @@ import schema from "./schema";
 import expressPlayground from "graphql-playground-middleware-express";
 import Database from "./lib/database";
 import { IContext } from "./interfaces/context.interface";
+import chalk from "chalk";
 
 // configuracion de las variables de entorno
 
@@ -54,7 +55,12 @@ async function init() {
     {
       port: PORT,
     },
-    () => console.log(`http://localhost:${PORT}  API MEANG - Online shop Start`)
+    () => {
+      console.log("=============== SERVER APINGRAPHQL===========");
+      console.log(`STATUS: ${chalk.greenBright("ONLINE")}`);
+      console.log(`MESSAGE: ${chalk.greenBright("API MENAG - ONLINE SHOP")}`);
+      console.log(`http://localhost:${PORT}  API MEANG - Online shop Start`);
+    }
   );
 }
 init();
