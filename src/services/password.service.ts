@@ -10,7 +10,7 @@ class PasswordService extends ResolversOperationsService {
   constructor(root: object, variables: object, context: IContextDate) {
     super(root, variables, context);
   }
-  async senMail() {
+  async sendMail() {
     const email = this.getVariables().user?.email || "";
     if (email === undefined || email === "") {
       return {

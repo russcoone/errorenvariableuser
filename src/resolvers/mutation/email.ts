@@ -15,6 +15,7 @@ const resolversMailMutation: IResolvers = {
     },
     async activeUserEmail(_, { id, email }) {
       const token = new JWT().sign({ user: { id, email } }, EXPIRETIME.H1);
+
       return new UsersService(_, { user: { id, email } }, {}).active();
     },
 
@@ -30,10 +31,10 @@ const resolversMailMutation: IResolvers = {
         _,
         { id, user: { birthday, password } },
         { token, db }
-      ).unblock(true);
+      ).unblock(true, false);
     },
     async resetPassword(_, { email }, { db }) {
-      return new PasswordService(_, { user: { email } }, { db }).senMail();
+      return new PasswordService(_, { user: { email } }, { db }).sendMail();
     },
     async changePassword(_, { id, password }, { db, token }) {
       // verificar el tokens

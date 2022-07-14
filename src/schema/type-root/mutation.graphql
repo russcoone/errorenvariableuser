@@ -4,7 +4,11 @@ type Mutation {
   register(user: UserInput!):ResultUser
   updateUser(user: UserInput!):ResultUser
   deleteUser(id: ID!): ResultUser
-  blockUser(id: ID!): ResultUsers
+  blockUser("ID unico del usuario que queremos eliminar"
+  id: ID!,
+  "Argumento para especificar si quermos bloquear o desbloquear" unblock: Boolean = false,
+  "Especificar la procedencia de la peticion para la midificacion"
+  admin: Boolean  =false): ResultUsers
   "Apartado de operaciones donde trabajamos con los generos"
   addGenre(genre: String!): ResultGenre
   updateGenre(id: ID!, genre: String!): ResultGenre

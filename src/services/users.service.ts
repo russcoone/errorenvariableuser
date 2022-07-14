@@ -1,4 +1,9 @@
-import { COLLECTIONS, EXPIRETIME, MESSAGES } from "../config/constants";
+import {
+  ACTIVE_VALUE_FILTER,
+  COLLECTIONS,
+  EXPIRETIME,
+  MESSAGES,
+} from "../config/constants";
 import { IContextDate } from "../interfaces/context-data.interface";
 import { asignDocmentId, findOneElement } from "../lib/db-operations";
 import ResolversOperationsService from "./resolvers-operations.service";
@@ -13,7 +18,14 @@ class UsersService extends ResolversOperationsService {
   }
 
   // lista de usuarios
-  async items() {
+  async items(active: string = ACTIVE_VALUE_FILTER.ACTIVE) {
+    console.log("servece", active);
+    let filter: object = { active: { $ne: false } };
+    if (active === ACTIVE_VALUE_FILTER.ALL) {
+      filter = {};
+    } else if (active === ACTIVE_VALUE_FILTER.INACTIVE) {
+      filter = { active: { $eq: false } };
+    }
     const page = this.getVariables().pagination?.page;
     const itemsPage = this.getVariables().pagination?.itemsPage;
 
@@ -21,7 +33,8 @@ class UsersService extends ResolversOperationsService {
       this.collection,
       "usuarios",
       page,
-      itemsPage
+      itemsPage,
+      filter
     );
     return {
       info: result.info,
@@ -190,7 +203,7 @@ class UsersService extends ResolversOperationsService {
       message: result.message,
     };
   }
-  async unblock(unblock: boolean) {
+  async unblock(unblock: boolean, admin: boolean) {
     const id = this.getVariables().id;
     const user = this.getVariables().user;
     if (!this.checkData(String(id) || "")) {
@@ -200,22 +213,23 @@ class UsersService extends ResolversOperationsService {
         genre: null,
       };
     }
-    if (user?.password !== "1234") {
+    if (user?.password === "1234") {
       return {
         status: false,
         message:
-          "En este caso no podemos activar porque no has cambiado el password que corresponde '1234'",
+          'En este caso no podemos activar porque no has cambiado el password que corresponde "1234"',
       };
     }
 
     let update = { active: unblock };
-    if (unblock) {
+    if (unblock && !admin) {
+      console.log("Soy clinete y estoy cambiando la contraseña");
       update = Object.assign(
         {},
         { active: true },
         {
           birthday: user?.birthday,
-          password: bcrypt.hashSync(user?.password, 10),
+          password: bcrypt.hashSync(user?.password || "", 10),
         }
       );
     }
@@ -237,6 +251,12 @@ class UsersService extends ResolversOperationsService {
   async active() {
     const id = this.getVariables().user?.id;
     const email = this.getVariables().user?.email || "";
+    if (email === undefined || email === "") {
+      return {
+        status: false,
+        message: "El email no se ha definido correctarmenbte",
+      };
+    }
 
     const token = new JWT().sign({ user: { id, email } }, EXPIRETIME.H1);
     const html = `Para activar la cuenta haz click sobre este enlace: <a href="${process.env.CLIENT_URL}/#/active/${token}">Clic aqui</a>`;
